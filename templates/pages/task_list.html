@@ -1,0 +1,30 @@
+{% extends "layouts/base_layout.html" %}
+
+{% block main %}
+    <section class="container">
+        <div class="row justify-content-md-center">
+            <a href="/task" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Добавить задачу</a>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="accordion col-12" id="accordionExample">
+            {% for task in tasks %}
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a href="/tasks/{{ task.id }}" class="btn btn-link" role="button" aria-pressed="true">{{ task.title }}</a>
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                      {{ task.description }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+        </div>
+    </section>
+{% endblock %}
