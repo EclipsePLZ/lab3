@@ -16,7 +16,7 @@ app.secret_key = b'_5#y2L"F4Q8ziDec]/'
 @app.route('/')
 def home():
     if 'user_id' in session:
-        user_id = session['user_id'] ff
+        user_id = session['user_id']
         user = Storage.get_user_by_id(user_id)
         return render_template('pages/index.html', user=user)
     else:
@@ -45,9 +45,9 @@ def login_action():
     # Ищем пользователя в БД с таким email паролем
     user = Storage.get_user_by_email_and_password(request.form['email'], request.form['password'])
 
-    # Неверный пароль
+    # Неверные данные для входа
     if not user:
-        return render_template('pages/login.html', page_title=page_title, error='Неверный пароль')
+        return render_template('pages/login.html', page_title=page_title, error='Неверный логин или пароль')
 
     # Сохраняем пользователя в сессии
     session['user_id'] = user.id
@@ -80,6 +80,10 @@ def registration_action():
     # В случае ошибки рендерим тот же шаблон, но с текстом ошибки
     if error:
         return render_template('pages/registration.html', page_title=page_title, error=error)
+
+    check_user = Storage.check_user_by_email(request.form['email'])
+    if check_user:
+        return render_template('pages/registration.html',page_title=page_title,error='Пользователь с таким логином уже существует')
 
     # Добавляем пользователя
     Storage.add_user(User(None, request.form['email'], request.form['password']))

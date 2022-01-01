@@ -37,6 +37,20 @@ class Storage:
             return None
 
     @staticmethod
+    def check_user_by_email(email:str)->User:
+        """Найти пользователя по email
+        :param email:       электронная почта
+        :type email:        str
+        :return: да/нет
+        :rtype: bool
+        """
+        user_data=db.execute('SELECT * FROM users WHERE email=?',(email,)).fetchone()
+        if user_data:
+            return True
+        else:
+            return False
+
+    @staticmethod
     def get_user_by_id(id: int) -> User:
         """Найти пользователя по id
         :param id:  идентификатор пользователя
