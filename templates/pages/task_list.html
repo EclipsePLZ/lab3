@@ -14,6 +14,9 @@
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                       <a href="/tasks/{{ task.id }}" class="btn btn-link" role="button" aria-pressed="true">{{ task.title }}</a>
                     </button>
+                      <button class="btn btn-danger float-right" type="button">
+                          <a href="/delete/{{ task.id }}" class="btn btn-danger" role="button">Удалить</a>
+                      </button>
                   </h5>
                 </div>
 

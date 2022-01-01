@@ -104,3 +104,11 @@ class Storage:
         db.execute('INSERT INTO tasks (title, description, id_user) VALUES (?,?,?)',
                    (task.title, task.description, task.user.id))
         db.commit()
+
+    @staticmethod
+    def delete_task(task_id:int):
+        """Удаление задачи
+        :param task_id: id задачи
+        :type task_id: int"""
+        db.execute('DELETE FROM tasks WHERE tasks.id=?',(task_id,))
+        db.commit()
