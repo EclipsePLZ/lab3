@@ -138,16 +138,25 @@ def create_task():
     else:
         redirect(url_for('home'))
 
+
 @app.route('/delete/<int:task_id>', methods=['GET'])
 def remove_task(task_id:int):
     if 'user_id' in session:
-        user_id=session['user_id']
-        user=Storage.get_user_by_id(user_id)
         Storage.delete_task(task_id)
         return redirect(url_for('show_tasks'))
     else:
-        redirect(url_for('home'))
+        redirect('/login')
 
+
+@app.route('/create_task/<int:task_id>',methods=['POST'])
+def refresh_task(task_id:int):
+    if 'user_id' in session:
+        user_id=session['user_id']
+        user=Storage.get_user_by_id(user_id)
+        Storage.update_task(Task(task_id,request.form['title-input'],request.form['description-input'],user))
+        return  redirect(url_for('show_tasks'))
+    else:
+        return redirect('/login')
 
 @app.route('/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id: int):

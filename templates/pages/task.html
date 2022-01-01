@@ -8,10 +8,10 @@
             </div>
         {% endif %}
         <h4>Задача №{{ task.id }}</h4>
-        <form action="/create_task" method="POST" class="card-body">
+        <form action="/create_task/{{ task.id }}" method="POST" class="card-body">
             <div class="form-group">
                 <label for="title-input">Заголовок:</label>
-                <input type="text" name="title-input" class="form-control" id="title-input" placeholder="Заголовок задачи" value={{ task.title }}>
+                <input type="text" name="title-input" class="form-control" id="title-input" placeholder="Заголовок задачи" value="{{ task.title }}">
             </div>
             <div class="form-group">
                 <label for="description-input">Описание:</label>

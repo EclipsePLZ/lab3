@@ -112,3 +112,11 @@ class Storage:
         :type task_id: int"""
         db.execute('DELETE FROM tasks WHERE tasks.id=?',(task_id,))
         db.commit()
+
+    @staticmethod
+    def update_task(task: Task):
+        """Обновление задачи
+        :param task: задача
+        :type task: Task"""
+        db.execute('UPDATE tasks SET title=?, description=? WHERE id=?',(task.title,task.description,task.id))
+        db.commit()
