@@ -15,6 +15,7 @@ async function doneTask(id){
     let title = document.getElementById(`task_title_${id}`);
     let description = document.getElementById(`task_description_${id}`);
     let linkTitle=document.getElementById(`task_title_${id}`);
+    let textDescription=document.getElementById(`task_description_${id}`);
     if(button.classList.contains('btn-outline-secondary')){
         let title_text=title.innerHTML;
         let description_text=description.innerHTML;
@@ -23,6 +24,7 @@ async function doneTask(id){
         button.classList.remove('btn-outline-secondary');
         button.classList.add('btn-secondary');
         linkTitle.classList.add('disabled');
+        textDescription.classList.add('text-secondary');
     }else{
         let titleDel = document.getElementById(`del_title_${id}`).innerHTML;
         let descriptionDel = document.getElementById(`del_descr_${id}`).innerHTML;
@@ -31,5 +33,6 @@ async function doneTask(id){
         button.classList.remove('btn-secondary');
         button.classList.add('btn-outline-secondary');
         linkTitle.classList.remove('disabled');
+        textDescription.classList.remove('text-secondary');
     }
 }
