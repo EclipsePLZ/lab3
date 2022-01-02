@@ -143,7 +143,6 @@ def create_task():
 def remove_task(task_id:int):
     if 'user_id' in session:
         Storage.delete_task(task_id)
-        return redirect(url_for('show_tasks'))
     else:
         redirect('/login')
 
