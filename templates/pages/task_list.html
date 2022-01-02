@@ -11,17 +11,20 @@
               <div class="card" id="card_{{ task.id }}">
                 <div class="card-header">
                   <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      <a href="/tasks/{{ task.id }}" class="btn btn-link" role="button" aria-pressed="true">{{ task.title }}</a>
-                    </button>
-                      <button class="btn btn-danger float-right" type="button" onclick="removeTask({{ task.id }})">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <a href="/tasks/{{ task.id }}" class="btn btn-link" role="button" aria-pressed="true" id="task_title_{{ task.id }}">{{ task.title }}</a>
+                      </button>
+                      <button class="btn btn-danger float-right ml-3" type="button" onclick="removeTask({{ task.id }})">
                           Удалить
+                      </button>
+                      <button type="button" class="btn float-right btn-outline-secondary" onclick="doneTask({{ task.id }})" id="done_button_{{ task.id }}">
+                          Выполнено
                       </button>
                   </h5>
                 </div>
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                  <div class="card-body">
+                  <div class="card-body" id="task_description_{{ task.id }}">
                       {{ task.description }}
                   </div>
                 </div>
