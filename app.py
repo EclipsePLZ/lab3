@@ -133,7 +133,7 @@ def create_task():
             error = 'Требуется ввести заголовок задачи'
         if error:
             return render_template('pages/new_task.html', page_title='Добавить задачу', error=error, user=user)
-        Storage.add_task(Task(None, request.form['title-input'], request.form['description-input'], user))
+        Storage.add_task(Task(None, request.form['title-input'], request.form['description-input'], user,0))
         return redirect(url_for('show_tasks'))
     else:
         redirect(url_for('home'))
@@ -147,12 +147,22 @@ def remove_task(task_id:int):
         redirect('/login')
 
 
+@app.route('/condition/<int:task_id>', methods=['GET'])
+def change_condition_task(task_id:int):
+    if 'user_id' in session:
+        condition=Storage.get_condition(task_id)
+        condition=(condition[0]+1)%2
+        Storage.change_condition(task_id,condition)
+    else:
+        redirect('/login')
+
+
 @app.route('/create_task/<int:task_id>',methods=['POST'])
 def refresh_task(task_id:int):
     if 'user_id' in session:
         user_id=session['user_id']
         user=Storage.get_user_by_id(user_id)
-        Storage.update_task(Task(task_id,request.form['title-input'],request.form['description-input'],user))
+        Storage.update_task(Task(task_id,request.form['title-input'],request.form['description-input'],user,0))
         return  redirect(url_for('show_tasks'))
     else:
         return redirect('/login')

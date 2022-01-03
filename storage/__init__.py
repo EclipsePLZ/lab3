@@ -71,14 +71,15 @@ class Storage:
         :return: список задач
         :rtype: Tasks[]
         """
-        tasks = db.execute("SELECT tasks.id, tasks.title, tasks.description, tasks.id_user from tasks INNER JOIN users ON tasks.id_user = users.id where users.id=?",
+        tasks = db.execute("SELECT tasks.id, tasks.title, tasks.description, tasks.id_user, tasks.condition from tasks INNER JOIN users ON tasks.id_user = users.id where users.id=?",
                            (user_id,)).fetchall()
         tasks_list = []
         for task in tasks:
             tasks_list.append(Task(id=task[0],
                                    title=task[1],
                                    description=task[2],
-                                   user=Storage.get_user_by_id(task[3])))
+                                   user=Storage.get_user_by_id(task[3]),
+                                   condition=task[4]))
         return tasks_list
 
     @staticmethod
@@ -92,7 +93,7 @@ class Storage:
         task_data = db.execute('SELECT * from tasks where tasks.id=?', (task_id,)).fetchone()
         if task_data:
             user = Storage.get_user_by_id(task_data[3])
-            return Task(id=task_data[0], title=task_data[1], description=task_data[2], user=user)
+            return Task(id=task_data[0], title=task_data[1], description=task_data[2], user=user, condition=task_data[4])
         else:
             return None
 
@@ -101,8 +102,8 @@ class Storage:
         """Добавление задачи
         :param task: задача
         :type task: Task"""
-        db.execute('INSERT INTO tasks (title, description, id_user) VALUES (?,?,?)',
-                   (task.title, task.description, task.user.id))
+        db.execute('INSERT INTO tasks (title, description, id_user,condition ) VALUES (?,?,?,?)',
+                   (task.title, task.description, task.user.id,0))
         db.commit()
 
     @staticmethod
@@ -114,9 +115,30 @@ class Storage:
         db.commit()
 
     @staticmethod
+    def change_condition(task_id:int, condition:int):
+        """Изменение состояния задачи
+        :param task_id: id задачи
+        :param condition: новое состояние задачи
+        :type task_id: int
+        :type condition: int"""
+        db.execute('UPDATE tasks SET condition=? WHERE id=?',(condition,task_id,))
+        db.commit()
+
+    @staticmethod
+    def get_condition(task_id:int)->int:
+        """Получение состояния задачи
+        :param task_id: id задачи
+        :type task_id: int
+        :return статус задачи
+        :rtype: int"""
+        condition = db.execute('SELECT condition FROM tasks WHERE id=?',(task_id,)).fetchone()
+        return condition
+
+
+    @staticmethod
     def update_task(task: Task):
         """Обновление задачи
         :param task: задача
         :type task: Task"""
-        db.execute('UPDATE tasks SET title=?, description=? WHERE id=?',(task.title,task.description,task.id))
+        db.execute('UPDATE tasks SET title=?, description=? WHERE id=?',(task.title,task.description,task.id,))
         db.commit()
