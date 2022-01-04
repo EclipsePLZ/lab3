@@ -20,4 +20,8 @@
             <button type="submit" class="btn btn-primary">Обновить</button>
         </form>
     </section>
+        <div class="mt-5" id="comments_{{ task.id }}">
+            <h5>Комментарии:</h5>
+            <script>loadComments({{ task.id }})</script>
+        </div>
 {% endblock %}

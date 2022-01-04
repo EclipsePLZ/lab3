@@ -44,6 +44,43 @@ async function doneTask(id){
     });
 }
 
-async function showComments(id){
+async function loadComments(id){
+    let comment_block=document.getElementById(`comments_${id}`);
+    // comment_block.innerText=comment_block.innerText+`<div class="collapse" id="comments_${id}">`;
+    await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+        .then(response=>response.json())
+        .then(comments=>{
+            for(let i=0;i<comments.length;i++){
+                let user_name = comments[i].name+` (${comments[i].email})`;
+                let text = comments[i].body;
+                // comment_block.innerText=comment_block.innerText+`<div class="card card-body">${text}</div>`;
+                //console.log(comment_block.innerText);
+                let singleComment=document.createElement(`div`);
+                let commentTitle=document.createElement('h5');
+                let commentBody=document.createElement('p');
+                let commentUser=document.createElement('p');
+                let commentEmail=document.createElement('a');
+                commentUser.textContent=comments[i].name;
+                commentUser.classList.add('d-inline');
+                commentUser.classList.add('p-2');
 
+                commentEmail.href=`mailto:${comments[i].email}`;
+                commentEmail.textContent=`(${comments[i].email})`;
+                commentEmail.classList.add('d-inline');
+
+                commentTitle.classList.add('card-title');
+                commentTitle.appendChild(commentUser);
+                commentTitle.appendChild(commentEmail);
+
+                commentBody.classList.add('card-text');
+                commentBody.textContent=text;
+
+                singleComment.classList.add('card');
+                singleComment.classList.add('card-body');
+                singleComment.classList.add('bg-light');
+                singleComment.appendChild(commentTitle);
+                singleComment.appendChild(commentBody);
+                comment_block.appendChild(singleComment);
+            }
+        });
 }

@@ -41,9 +41,6 @@
                       {% else %}
                           <del><p>{{ task.description }}</p></del>
                       {% endif %}
-                    <button class="btn btn-info mt-3" type="button" data-toggle="collapse" data-target="#comments_{{ task.id }}" aria-expanded="false" aria-controls="comments_{{ task.id }}" onclick="showComments({{ task.id }})">
-                        Показать комментарии
-                    </button>
                   </div>
                 </div>
               </div>
