@@ -167,6 +167,7 @@ def refresh_task(task_id:int):
     else:
         return redirect('/login')
 
+
 @app.route('/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id: int):
     if 'user_id' in session:
