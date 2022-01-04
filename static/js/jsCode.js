@@ -78,6 +78,7 @@ async function loadComments(id){
                 singleComment.classList.add('card');
                 singleComment.classList.add('card-body');
                 singleComment.classList.add('bg-light');
+                singleComment.classList.add('mb-1');
                 singleComment.appendChild(commentTitle);
                 singleComment.appendChild(commentBody);
                 comment_block.appendChild(singleComment);
