@@ -9,6 +9,7 @@
             <div class="accordion col-12" id="accordionExample">
             {% for task in tasks %}
               <div class="card" id="card_{{ task.id }}">
+              <script>removeLoadIcon()</script>
                 <div class="card-header">
                   <h5 class="mb-0">
                       {% if not task.condition %}
@@ -44,7 +45,9 @@
                   </div>
                 </div>
               </div>
+                <div class="spinner-border text-primary" role="status" id="spinner_loading"></div>
             {% endfor %}
+            <script>removeLoadIcon()</script>
         </div>
         </div>
     </section>

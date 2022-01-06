@@ -82,10 +82,13 @@ async function loadComments(id){
                 singleComment.appendChild(commentTitle);
                 singleComment.appendChild(commentBody);
                 if(i==0){
-                    let spinner=document.getElementById('spinner_loading');
-                    spinner.remove();
+                    removeLoadIcon()
                 }
                 comment_block.appendChild(singleComment);
             }
         });
+}
+
+function removeLoadIcon(){
+    document.getElementById('spinner_loading').remove();
 }
