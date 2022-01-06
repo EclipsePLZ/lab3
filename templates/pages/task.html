@@ -22,6 +22,7 @@
     </section>
         <div class="mt-5" id="comments_{{ task.id }}">
             <h5>Комментарии:</h5>
+            <div class="spinner-border text-primary" role="status" id="spinner_loading"></div>
             <script>loadComments({{ task.id }})</script>
         </div>
 {% endblock %}

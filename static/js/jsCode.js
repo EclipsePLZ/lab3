@@ -81,6 +81,10 @@ async function loadComments(id){
                 singleComment.classList.add('mb-1');
                 singleComment.appendChild(commentTitle);
                 singleComment.appendChild(commentBody);
+                if(i==0){
+                    let spinner=document.getElementById('spinner_loading');
+                    spinner.remove();
+                }
                 comment_block.appendChild(singleComment);
             }
         });
