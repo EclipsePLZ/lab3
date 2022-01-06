@@ -5,6 +5,10 @@
         <div class="row justify-content-md-center mb-4">
             <a href="/task" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Добавить задачу</a>
         </div>
+        <div class="custom-control mb-2 custom-checkbox" onchange="transformTaskList()">
+            <input class="custom-control-input" type="checkbox" name="flexCheck" id="onlyDone">
+            <label class="custom-control-label" for="onlyDone">Только невыполненные задачи</label>
+        </div>
         <div class="row justify-content-md-center">
             <div class="accordion col-12" id="accordionExample">
             {% for task in tasks %}

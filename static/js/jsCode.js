@@ -89,6 +89,29 @@ async function loadComments(id){
         });
 }
 
-function removeLoadIcon(){
+async function removeLoadIcon(){
     document.getElementById('spinner_loading').remove();
 }
+
+//Вариант с удалением выполненных задач (при этом, чтобы вернуть задачи нужно перезагрузить страницу)
+async function transformTaskList(){
+    let checkbox=document.getElementById('onlyDone');
+    if(checkbox.checked){
+        let allTasks=document.getElementsByClassName('card');
+        for(let i=0;i<allTasks.length;i++){
+            let temp=allTasks[i];
+            let find=temp.children[1];
+            while(find.children[0]){
+                find=find.children[0];
+            }
+            if (find.tagName=='DEL'){
+                allTasks[i].remove();
+                i--;
+            }
+        }
+    }
+    else{
+        document.location.href=URL+'tasks';
+    }
+}
+

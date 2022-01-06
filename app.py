@@ -112,6 +112,7 @@ def show_tasks():
         return redirect('/login')
 
 
+
 @app.route('/task', methods=['GET'])
 def new_task():
     if 'user_id' in session:
