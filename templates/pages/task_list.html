@@ -2,15 +2,23 @@
 
 {% block main %}
     <section class="container">
-        <div class="row justify-content-md-center mb-4">
+        <div class="row justify-content-md-center mb-3">
             <a href="/task" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Добавить задачу</a>
         </div>
         <div class="d-flex">
-            <div class="custom-control mb-2 custom-checkbox" onchange="transformTaskList()">
+            <div class="dropdown mb-2">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropDownSortMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Сортировать
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropDownSortMenu">
+                    <a class="dropdown-item" href="#">По состоянию задачи</a>
+                    <a class="dropdown-item" href="#">По имени задачи</a>
+                </div>
+            </div>
+            <div class="custom-control mb-2 custom-checkbox ml-auto" onchange="transformTaskList()">
                 <input class="custom-control-input" type="checkbox" name="flexCheck" id="onlyDone">
                 <label class="custom-control-label" for="onlyDone">Только невыполненные задачи</label>
             </div>
-            <button type="button" class="btn ml-auto"></button>
         </div>
         <div class="row justify-content-md-center">
             <div class="accordion col-12" id="accordionExample">
