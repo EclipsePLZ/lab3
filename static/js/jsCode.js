@@ -93,25 +93,89 @@ async function removeLoadIcon(){
     document.getElementById('spinner_loading').remove();
 }
 
-//Вариант с удалением выполненных задач (при этом, чтобы вернуть задачи нужно перезагрузить страницу)
+//Показать и скрыть выполненные задачи
 async function transformTaskList(){
     let checkbox=document.getElementById('onlyDone');
     if(checkbox.checked){
         let allTasks=document.getElementsByClassName('card');
         for(let i=0;i<allTasks.length;i++){
-            let temp=allTasks[i];
-            let find=temp.children[1];
-            while(find.children[0]){
-                find=find.children[0];
-            }
-            if (find.tagName=='DEL'){
+            if(isTaskDone(allTasks[i])){
                 allTasks[i].remove();
                 i--;
             }
         }
     }
     else{
-        document.location.href=URL+'tasks';
+        await fetch(`${URL}tasks`,{
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json',
+        },})
+        .then(response=>response.text())
+        .then(comments=>{
+            let htmlParser=new DOMParser();
+            let htmlPage=htmlParser.parseFromString(comments,'text/html');
+            let tasksOld=document.getElementById('accordionExample');
+            let loading=htmlPage.getElementsByClassName('spinner-border');
+            while(loading[0]){
+                loading[0].remove();
+            }
+            tasksOld.innerHTML=htmlPage.getElementById('accordionExample').innerHTML;
+        });
     }
 }
 
+function isTaskDone(task){
+    let find=task.children[1];
+    while(find.children[0]){
+        find=find.children[0];
+    }
+    if (find.tagName=='DEL'){
+        return true;
+    }
+    return false;
+}
+
+let click=false;
+function NullClick(){
+    click=false;
+}
+
+async function SortByCondition(){
+    click=!click;
+    let cards=document.getElementsByClassName('card');
+    let listCards=document.getElementById('accordionExample');
+    const doneTasks=[];
+    const notDoneTasks=[];
+    for(let i=0;i<cards.length;i++){
+            if(isTaskDone(cards[i])){
+                doneTasks.push(cards[i]);
+            }
+            else{
+                notDoneTasks.push(cards[i]);
+            }
+        }
+    while (listCards.children[0]){
+        listCards.children[0].remove();
+    }
+    if(click){
+        while(notDoneTasks[0]){
+            listCards.appendChild(notDoneTasks[0]);
+            notDoneTasks.shift();
+        }
+        while(doneTasks[0]){
+            listCards.appendChild(doneTasks[0]);
+            doneTasks.shift();
+        }
+    }
+    else{
+        while(doneTasks[0]){
+            listCards.appendChild(doneTasks[0]);
+            doneTasks.shift();
+        }
+        while(notDoneTasks[0]){
+            listCards.appendChild(notDoneTasks[0]);
+            notDoneTasks.shift();
+        }
+    }
+}

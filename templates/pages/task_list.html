@@ -2,6 +2,7 @@
 
 {% block main %}
     <section class="container">
+        <script>NullClick()</script>
         <div class="row justify-content-md-center mb-3">
             <a href="/task" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Добавить задачу</a>
         </div>
@@ -11,8 +12,8 @@
                     Сортировать
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropDownSortMenu">
-                    <a class="dropdown-item" href="#">По состоянию задачи</a>
-                    <a class="dropdown-item" href="#">По имени задачи</a>
+                    <button class="dropdown-item" onclick="SortByCondition()">По состоянию задачи</button>
+                    <button class="dropdown-item">По имени задачи</button>
                 </div>
             </div>
             <div class="custom-control mb-2 custom-checkbox ml-auto" onchange="transformTaskList()">
