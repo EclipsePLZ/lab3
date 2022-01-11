@@ -136,13 +136,15 @@ function isTaskDone(task){
     return false;
 }
 
-let click=false;
+let clickSortByCondition=false;
+let clickSortByName=false;
 function NullClick(){
-    click=false;
+    clickSortByCondition=false;
+    clickSortByName=false;
 }
 
 async function SortByCondition(){
-    click=!click;
+    clickSortByCondition=!clickSortByCondition;
     let cards=document.getElementsByClassName('card');
     let listCards=document.getElementById('accordionExample');
     const doneTasks=[];
@@ -158,7 +160,7 @@ async function SortByCondition(){
     while (listCards.children[0]){
         listCards.children[0].remove();
     }
-    if(click){
+    if(clickSortByCondition){
         while(notDoneTasks[0]){
             listCards.appendChild(notDoneTasks[0]);
             notDoneTasks.shift();
@@ -177,5 +179,66 @@ async function SortByCondition(){
             listCards.appendChild(notDoneTasks[0]);
             notDoneTasks.shift();
         }
+    }
+}
+
+async function SortByName(){
+    clickSortByName=!clickSortByName;
+    let cards=document.getElementsByClassName('card');
+    let docListCards=document.getElementById('accordionExample');
+    const listOfCards=[];
+    for(let i=0;i<cards.length;i++){
+        listOfCards.push(cards[i]);
+    }
+    if(clickSortByName){
+        listOfCards.sort(function (first,second){
+            let titleFirst=first.children[1];
+            while (titleFirst.children[0]){
+                titleFirst=titleFirst.children[0];
+            }
+            titleFirst=titleFirst.textContent.toLowerCase();
+            console.log(titleFirst);
+            let titleSecond=second.children[1];
+            while (titleSecond.children[0]){
+                titleSecond=titleSecond.children[0];
+            }
+            titleSecond=titleSecond.textContent.toLowerCase();
+
+            if (titleFirst>titleSecond){
+                return 1;
+            }
+            if(titleSecond>titleFirst){
+                return -1;
+            }
+            return 0;
+        });
+    }
+    else{
+        listOfCards.sort(function compare(first,second){
+            let titleFirst=first.children[1];
+            while (titleFirst.children[0]){
+                titleFirst=titleFirst.children[0];
+            }
+            titleFirst=titleFirst.textContent.toLowerCase();
+            let titleSecond=second.children[1];
+            while (titleSecond.children[0]){
+                titleSecond=titleSecond.children[0];
+            }
+            titleSecond=titleSecond.textContent.toLowerCase();
+            if (titleFirst>titleSecond){
+                return -1;
+            }
+            if(titleSecond>titleFirst){
+                return 1;
+            }
+            return 0;
+        });
+    }
+    while (docListCards.children[0]){
+        docListCards.children[0].remove();
+    }
+    while(listOfCards[0]){
+        docListCards.appendChild(listOfCards[0]);
+        listOfCards.shift();
     }
 }
