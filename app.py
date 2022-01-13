@@ -175,7 +175,10 @@ def get_task(task_id: int):
         user_id = session['user_id']
         user = Storage.get_user_by_id(user_id)
         task = Storage.get_task_by_id(task_id)
-        return render_template('pages/task.html', page_title='Отредактировать задачу', task=task, user=user)
+        if task.user.id != user.id:
+            return redirect('/tasks')
+        else:
+            return render_template('pages/task.html', page_title='Отредактировать задачу', task=task, user=user)
     else:
         return redirect('/login')
 

@@ -31,6 +31,11 @@ async function doneTask(id){
             button.classList.add('btn-secondary');
             linkTitle.classList.add('disabled');
             textDescription.classList.add('text-secondary');
+            let checkbox=document.getElementById('onlyDone');
+            if (checkbox.checked){
+                let task=document.getElementById(`card_${id}`);
+                task.remove();
+            }
         }else{
             let titleDel = document.getElementById(`del_title_${id}`).innerHTML;
             let descriptionDel = document.getElementById(`del_descr_${id}`).innerHTML;
@@ -240,5 +245,23 @@ async function SortByName(){
     while(listOfCards[0]){
         docListCards.appendChild(listOfCards[0]);
         listOfCards.shift();
+    }
+}
+
+async function FilterByName(){
+    let filterName=document.getElementById('filterName').value.toLowerCase();
+    if (filterName.trim()!=""){
+        let cards=document.getElementsByClassName('card');
+        for (let i=0;i<cards.length;i++){
+            let titleFirst=cards[i].children[1];
+            while (titleFirst.children[0]){
+                titleFirst=titleFirst.children[0];
+            }
+            let titleTask=titleFirst.textContent.toLowerCase();
+            if (titleTask!=filterName){
+                cards[i].remove();
+                i--;
+            }
+        }
     }
 }
